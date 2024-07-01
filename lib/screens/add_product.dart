@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:social_recipes/models/merged.dart';
+import 'package:social_recipes/models/categories.dart';
 
 class AddProduct extends StatelessWidget {
   final String productName;
@@ -37,28 +38,33 @@ class AddProduct extends StatelessWidget {
                   debugPrint(options.toString());
                 },
                 searchEnabled: true,
+                hint: "What products are in your recipe? (max 3)",
+                searchLabel: "What products are in your recipe? (max 3)",
                 options: <ValueItem>[
                   ...merged.map((item) => ValueItem(label: item, value: item)),
                 ],
                 maxItems: 3,
-                disabledOptions: const [
-                  ValueItem(label: 'Option 1', value: '1')
-                ],
                 selectionType: SelectionType.multi,
-                chipConfig: const ChipConfig(wrapType: WrapType.wrap),
+                chipConfig: const ChipConfig(
+                    padding: EdgeInsets.all(5.0), wrapType: WrapType.wrap),
                 dropdownHeight: 300,
                 optionTextStyle: const TextStyle(fontSize: 16),
+                selectedOptions: [
+                  if (productName.isNotEmpty)
+                    ValueItem(label: productName, value: productName)
+                ],
                 selectedOptionIcon: const Icon(Icons.check_circle),
               ),
               const SizedBox(
                 height: 15,
               ),
-              const Row(
+              Row(
                 children: [
                   DropdownMenu(
-                    label: Text("Category"),
+                    label: const Text("Category"),
                     dropdownMenuEntries: [
-                      DropdownMenuEntry(value: "entrants", label: "Entrants")
+                      ...categories.map((item) =>
+                          DropdownMenuEntry(label: item, value: item)),
                     ],
                   ),
                 ],

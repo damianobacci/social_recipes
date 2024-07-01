@@ -49,39 +49,37 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+            const Text("Scroll to select the month"),
             SizedBox(
-              height: 160,
-              child: ListWheelScrollView.useDelegate(
-                itemExtent: 40,
-                magnification: 10.0,
-                diameterRatio: 5,
-                onSelectedItemChanged: (index) {
-                  setState(() {
-                    selectedMonthIndex = index;
-                  });
-                },
-                physics: const BouncingScrollPhysics(),
-                childDelegate: ListWheelChildBuilderDelegate(
-                  builder: (context, index) {
-                    final isSelected = index == selectedMonthIndex;
-                    return Center(
-                      child: Text(
-                        months[index],
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: isSelected
-                              ? const Color.fromARGB(255, 7, 179, 96)
-                              : Colors.black,
-                          fontWeight:
-                              isSelected ? FontWeight.bold : FontWeight.normal,
-                        ),
-                      ),
-                    );
+              height: 90,
+              child: RotatedBox(
+                quarterTurns: -1,
+                child: ListWheelScrollView(
+                  controller: FixedExtentScrollController(initialItem: 50),
+                  itemExtent: 100.0,
+                  onSelectedItemChanged: (index) {
+                    setState(() {
+                      selectedMonthIndex = index;
+                    });
                   },
-                  childCount: months.length,
+                  children: List.generate(
+                    12,
+                    (index) => RotatedBox(
+                      quarterTurns: 1,
+                      child: Text(months[index],
+                          style: TextStyle(
+                              fontSize: selectedMonthIndex == index ? 20 : 18,
+                              fontWeight: selectedMonthIndex == index
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                              color: selectedMonthIndex == index
+                                  ? const Color.fromARGB(255, 7, 179, 96)
+                                  : Colors.black)),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
