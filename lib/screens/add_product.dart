@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
+import 'package:social_recipes/models/merged.dart';
 
 class AddProduct extends StatelessWidget {
-  const AddProduct({super.key});
+  final String productName;
+  const AddProduct({required this.productName, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +32,29 @@ class AddProduct extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
+              MultiSelectDropDown(
+                onOptionSelected: (options) {
+                  debugPrint(options.toString());
+                },
+                searchEnabled: true,
+                options: <ValueItem>[
+                  ...merged.map((item) => ValueItem(label: item, value: item)),
+                ],
+                maxItems: 3,
+                disabledOptions: const [
+                  ValueItem(label: 'Option 1', value: '1')
+                ],
+                selectionType: SelectionType.multi,
+                chipConfig: const ChipConfig(wrapType: WrapType.wrap),
+                dropdownHeight: 300,
+                optionTextStyle: const TextStyle(fontSize: 16),
+                selectedOptionIcon: const Icon(Icons.check_circle),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
               const Row(
                 children: [
-                  DropdownMenu(
-                    label: Text("Category"),
-                    dropdownMenuEntries: [
-                      DropdownMenuEntry(value: "entrants", label: "Entrants")
-                    ],
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
                   DropdownMenu(
                     label: Text("Category"),
                     dropdownMenuEntries: [
