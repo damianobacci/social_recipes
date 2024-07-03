@@ -4,6 +4,8 @@ import 'package:social_recipes/models/months.dart';
 import 'package:social_recipes/models/vegetables.dart';
 import 'package:social_recipes/models/fruits.dart';
 
+int currentMonth = DateTime.now().month;
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -15,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
-  int selectedMonthIndex = 0;
+  int selectedMonthIndex = currentMonth - 1;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        drawer: const Drawer(),
         appBar: AppBar(
           title: const Text('Social Recipes'),
           elevation: 0,
@@ -49,32 +52,39 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            const Text("Scroll to select the month"),
-            SizedBox(
-              height: 90,
-              child: RotatedBox(
-                quarterTurns: -1,
-                child: ListWheelScrollView(
-                  controller: FixedExtentScrollController(initialItem: 50),
-                  itemExtent: 100.0,
-                  onSelectedItemChanged: (index) {
-                    setState(() {
-                      selectedMonthIndex = index;
-                    });
-                  },
-                  children: List.generate(
-                    12,
-                    (index) => RotatedBox(
-                      quarterTurns: 1,
-                      child: Text(months[index],
-                          style: TextStyle(
-                              fontSize: selectedMonthIndex == index ? 20 : 18,
-                              fontWeight: selectedMonthIndex == index
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                              color: selectedMonthIndex == index
-                                  ? const Color.fromARGB(255, 7, 179, 96)
-                                  : Colors.black)),
+            const Text("← Scroll to select the month →"),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 60.0),
+              child: SizedBox(
+                height: 100,
+                child: RotatedBox(
+                  quarterTurns: -1,
+                  child: ListWheelScrollView(
+                    controller:
+                        FixedExtentScrollController(initialItem: currentMonth),
+                    itemExtent: 100,
+                    onSelectedItemChanged: (index) {
+                      setState(() {
+                        selectedMonthIndex = index;
+                      });
+                    },
+                    children: List.generate(
+                      12,
+                      (index) => RotatedBox(
+                        quarterTurns: 1,
+                        child: Center(
+                          child: Text(months[index],
+                              style: TextStyle(
+                                  fontSize:
+                                      selectedMonthIndex == index ? 20 : 18,
+                                  fontWeight: selectedMonthIndex == index
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                  color: selectedMonthIndex == index
+                                      ? const Color.fromARGB(255, 7, 179, 96)
+                                      : Colors.black)),
+                        ),
+                      ),
                     ),
                   ),
                 ),
