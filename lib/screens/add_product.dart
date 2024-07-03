@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:social_recipes/models/merged.dart';
-import 'package:social_recipes/models/categories.dart';
+// import 'package:social_recipes/models/categories.dart';
 
 class AddProduct extends StatelessWidget {
   final String productName;
-  const AddProduct({this.productName = "", super.key});
+  final _nameController = TextEditingController();
+  final _linkController = TextEditingController();
+  final _products = <String>[];
+  AddProduct({this.productName = "", super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +19,7 @@ class AddProduct extends StatelessWidget {
           child: Column(
             children: [
               TextFormField(
+                controller: _nameController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Enter the name of the recipe',
@@ -25,6 +29,7 @@ class AddProduct extends StatelessWidget {
                 height: 15,
               ),
               TextFormField(
+                controller: _linkController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Link to the recipe',
@@ -35,11 +40,14 @@ class AddProduct extends StatelessWidget {
               ),
               MultiSelectDropDown(
                 onOptionSelected: (options) {
-                  debugPrint(options.toString());
+                  _products.clear();
+                  for (var option in options) {
+                    _products.add(option.value.toString());
+                  }
                 },
                 searchEnabled: true,
                 hint: "What products are in your recipe? (max 3)",
-                searchLabel: "What products are in your recipe? (max 3)",
+                searchLabel: "Search for products...",
                 options: <ValueItem>[
                   ...merged.map((item) => ValueItem(label: item, value: item)),
                 ],
@@ -58,21 +66,27 @@ class AddProduct extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              Row(
-                children: [
-                  DropdownMenu(
-                    label: const Text("Category"),
-                    dropdownMenuEntries: [
-                      ...categories.map((item) =>
-                          DropdownMenuEntry(label: item, value: item)),
-                    ],
-                  ),
-                ],
-              ),
+              // Row( // Categories can eventually be added to the mix to show recipes on the product page
+              //   children: [
+              //     DropdownMenu(
+              //       label: const Text("Category"),
+              //       dropdownMenuEntries: [
+              //         ...categories.map((item) =>
+              //             DropdownMenuEntry(label: item, value: item)),
+              //       ],
+              //     ),
+              //   ],
+              // ),
               const SizedBox(
                 height: 15,
               ),
-              ElevatedButton(onPressed: () {}, child: const Text("Add recipe"))
+              ElevatedButton(
+                  onPressed: () {
+                    debugPrint(_linkController.text);
+                    debugPrint(_nameController.text);
+                    debugPrint(_products.toString());
+                  },
+                  child: const Text("Add recipe"))
             ],
           ),
         ));

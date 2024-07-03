@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const Text("← Scroll to select the month →"),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 60.0),
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: SizedBox(
                 height: 100,
                 child: RotatedBox(
@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                   child: ListWheelScrollView(
                     controller:
                         FixedExtentScrollController(initialItem: currentMonth),
-                    itemExtent: 100,
+                    itemExtent: 110,
                     onSelectedItemChanged: (index) {
                       setState(() {
                         selectedMonthIndex = index;
