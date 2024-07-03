@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         drawer: Drawer(
           child: Column(
             children: [
-              DrawerHeader(
+              const DrawerHeader(
                   child: Center(
                 child: Text(
                   "Social Recipe",
@@ -36,23 +36,18 @@ class _HomePageState extends State<HomePage> {
                 ),
               )),
               ListTile(
-                leading: Icon(Icons.home),
-                title: Text("Home"),
+                leading: const Icon(Icons.add),
+                title: const Text("Add Recipe"),
                 onTap: () {
-                  Navigator.pushNamed(context, "/home");
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.add),
-                title: Text("Add Recipe"),
-                onTap: () {
+                  Navigator.pop(context);
                   Navigator.pushNamed(context, "/add");
                 },
               ),
               ListTile(
-                leading: Icon(Icons.info),
-                title: Text("About"),
+                leading: const Icon(Icons.info),
+                title: const Text("About"),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.pushNamed(context, "/about");
                 },
               ),
