@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_recipes/screens/homepage.dart';
+import 'package:social_recipes/screens/add_product.dart';
+import 'package:social_recipes/screens/about_page.dart';
 
 // Themes
 
@@ -24,6 +26,11 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(colorScheme: kDarkColorScheme),
       home: const HomePage(),
+      routes: {
+        "/home": (context) => const HomePage(),
+        "/add": (context) => const AddProduct(),
+        "/about": (context) => const AboutPage(),
+      },
     );
   }
 }

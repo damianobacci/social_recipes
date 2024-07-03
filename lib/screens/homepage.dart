@@ -25,7 +25,40 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        drawer: const Drawer(),
+        drawer: Drawer(
+          child: Column(
+            children: [
+              DrawerHeader(
+                  child: Center(
+                child: Text(
+                  "Social Recipe",
+                  style: TextStyle(),
+                ),
+              )),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text("Home"),
+                onTap: () {
+                  Navigator.pushNamed(context, "/home");
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.add),
+                title: Text("Add Recipe"),
+                onTap: () {
+                  Navigator.pushNamed(context, "/add");
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.info),
+                title: Text("About"),
+                onTap: () {
+                  Navigator.pushNamed(context, "/about");
+                },
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           title: const Text('Social Recipes'),
           elevation: 0,

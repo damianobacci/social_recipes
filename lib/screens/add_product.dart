@@ -5,7 +5,7 @@ import 'package:social_recipes/models/categories.dart';
 
 class AddProduct extends StatelessWidget {
   final String productName;
-  const AddProduct({required this.productName, super.key});
+  const AddProduct({this.productName = "", super.key});
 
   @override
   Widget build(BuildContext context) {
